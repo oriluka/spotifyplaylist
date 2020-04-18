@@ -1,0 +1,21 @@
+module.exports = {
+  mode: 'development',
+  entry: {
+    app: './client/index.js';
+  }
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist');
+  }
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader:
+        }
+      }
+    ]
+  }
+}
