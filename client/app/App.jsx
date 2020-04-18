@@ -23,13 +23,14 @@ class App extends React.Component {
 
   getStarted() {
     // Make authentication call here.
-    axios.get('localhost:4444/auth')
+    axios.get("http://localhost:4444/auth")
       .then((res) => {
-        console.log(res)
+        console.log(res);
       })
       .catch((err) => {
-        console.log('There was an error trying to get stuff')
-      })
+        console.log(err);
+        console.log("There was an error trying to get stuff");
+      });
 
   }
 

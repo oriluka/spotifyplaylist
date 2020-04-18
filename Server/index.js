@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path')
-const PORT = 4444;
+const PORT =  4444;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const { clientId } = require('../config.js')
@@ -9,18 +9,39 @@ const { clientId } = require('../config.js')
 // Middleware
 app.use(cors());
 app.use(bodyParser());
+// app.use(bodyParser.urlencoded({
+//   extended: true
+// }));
 app.use(express.static(path.resolve(__dirname, '../public')))
+
+
+//
+
 
 // Routes
 
 // Get authentication
 app.get('/auth', function(req, res) {
+  console.log('hey')
   var scopes = 'user-read-private user-read-email';
-  res.redirect('https://accounts.spotify.com/authorize' +
-    '?response_type=code' +
-    '&client_id=' + clientId +
-    (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-    '&redirect_uri=' + encodeURIComponent('localhost:444'));
+
+  console.log( "https://accounts.spotify.com/authorize" +
+      "?response_type=code" +
+      "&client_id=" +
+      clientId +
+      (scopes ? "&scope=" + encodeURIComponent(scopes) : "") +
+      "&redirect_uri=" +
+      encodeURIComponent("http://localhost:4444/")
+  )
+  Promise.resolve(res.redirect(
+    "https://accounts.spotify.com/authorize" +
+      "?response_type=code" +
+      "&client_id=" +
+      clientId +
+      (scopes ? "&scope=" + encodeURIComponent(scopes) : "") +
+      "&redirect_uri=" +
+      encodeURIComponent("http://localhost:4444/")
+  ));
 });
 // Get similar artist
 
