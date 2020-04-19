@@ -20,39 +20,32 @@ class App extends React.Component {
     }
   }
 
-
-  getStarted() {
-    // Make authentication call here.
-    axios.get("http://localhost:4444/auth")
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log("There was an error trying to get stuff");
-      });
-
-  }
-
-
   // Asks user to login and give permissions to spotify
-  componentDidMount() {
-  }
 
   render() {
-    if (this.state.accessToken === null) {
-      return (
-        <div id="get-started">
-          <h3>To get started:</h3>
-          <button onClick={this.getStarted}>Click Here</button>
-        </div>
-      )
-    } else {
-      return (
-        <div>Hey</div>
-      )
+    return (
+      <div className="playlistbuilder">
+        <a href='http://localhost:4444/login'>
+          <button>Login with Spotify</button>
+        </a>
+
+      </div>
+    )
+
+  //   if (this.state.accessToken === null) {
+  //     return (
+  //       <div id="get-started">
+  //         <h3>To get started:</h3>
+  //         <button onClick={this.getStarted}>Click Here</button>
+  //       </div>
+  //     )
+  //   } else {
+  //     return (
+  //       <div>Hey</div>
+  //     )
+  //   }
+  // }
     }
-  }
 }
 
 
