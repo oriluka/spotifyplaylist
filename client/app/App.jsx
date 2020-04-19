@@ -9,7 +9,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    const params = this.getHashParams();
+
     this.state = {
+      loggedIn: params.access_token ? true: false,
       accessToken: null,
       refreshToken: null,
       playlist: [],
@@ -20,33 +23,35 @@ class App extends React.Component {
     }
   }
 
-  // Asks user to login and give permissions to spotify
+  // Get tokens
+  getHashParams() {
+    var hashParams = {};
+    var e, r = /([^&;=]+)=?([^&;]*)/g,
+        q = window.location.hash.substring(1);
+    while ( e = r.exec(q)) {
+        hashParams[e[1]] = decodeURIComponent(e[2]);
+    }
+    return hashParams;
+  }
 
   render() {
-    return (
+
+    if (!this.state.loggedIn) {
+      return (
       <div className="playlistbuilder">
         <a href='http://localhost:4444/login'>
           <button>Login with Spotify</button>
         </a>
-
       </div>
-    )
-
-  //   if (this.state.accessToken === null) {
-  //     return (
-  //       <div id="get-started">
-  //         <h3>To get started:</h3>
-  //         <button onClick={this.getStarted}>Click Here</button>
-  //       </div>
-  //     )
-  //   } else {
-  //     return (
-  //       <div>Hey</div>
-  //     )
-  //   }
-  // }
+      )
+    } else {
+      return (
+        <div>Hey</div>
+      )
     }
+  }
 }
+
 
 
 export default App;
