@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
+import Spotify from 'spotify-web-api-js';
+import Search from './Search.jsx';
+
 // import the rest of the components
 
-
+const spotifyApi = new Spotify();
 
 class App extends React.Component {
 
@@ -19,7 +22,11 @@ class App extends React.Component {
       playlistName: '',
       playlistSize: '',
       artist: '',
-      song: ''
+      song: '',
+      search: [];
+    }
+    if (params.access_token) {
+      spotifyApi.setAccessToken(params.access_token);
     }
   }
 
@@ -34,6 +41,18 @@ class App extends React.Component {
     return hashParams;
   }
 
+  searchInputChange(query) {
+    let types = ['artist', 'track'];
+    spotifyApi.search(query, types, {limit: 3}, (err, res) => {
+      // If succeeded, display results as one enters in query.
+
+      // set search state
+      this.setState({
+        search: res
+      })
+    })
+  }
+
   render() {
 
     if (!this.state.loggedIn) {
@@ -46,7 +65,21 @@ class App extends React.Component {
       )
     } else {
       return (
-        <div>Hey</div>
+        <div>
+          <div className="search-artist-and-song">
+            <h3>Lets's get started!</h3>
+            <Search searchInputChange={searchInputChange} searchQuery={this.state.search}/>
+          </div>
+          <div className="related-artists">
+            <h3></h3>
+          </div>
+          <div className="related-songs">
+            <h3></h3>
+          </div>
+          <div className="playlist-song-list">
+
+          </div>
+        </div>
       )
     }
   }
