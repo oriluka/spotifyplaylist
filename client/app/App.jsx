@@ -1,10 +1,13 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import axios from 'axios';
 import Spotify from 'spotify-web-api-js';
 import Search from './Search.jsx';
 import Lineup from './Lineup.jsx';
 import Related from './Related.jsx';
 import SearchList from './SearchList.jsx';
+import SelectedSong from './SelectedSong.jsx';
+import SelectedArtist from './SelectedArtist.jsx';
 // import the rest of the components
 
 const spotifyApi = new Spotify();
@@ -29,7 +32,7 @@ class App extends React.Component {
       searchArtists: [],
       searchSongs: [],
       // Related
-      selectedSong: {},
+      selectedSong: [],
       selected: [],
       relatedSongs: [],
       relatedArtists: []
@@ -54,9 +57,19 @@ class App extends React.Component {
   }
 
   // Toggles search entry. If toggled selected when create button is made, the songs get added
-  onSearchResultClick() {
-    // Add the
+  onSearchResultClick(selection) {
+    // Add the'
+    let renderSidebar = this.renderSidebar.bind(this)
+    console.log('Clicked Search result')
+    // set selected
+    console.log(this.state.selected)
+    this.setState({
+      selected: [selection]
+    }, () => {
+      console.log(this.state.selected)
 
+      renderSidebar()
+    });
   }
 
   // Gets info for selected song
@@ -128,6 +141,63 @@ class App extends React.Component {
   searchSelectedArtist(artist) {
   }
 
+  ////////////////////////////////
+  ////////////// Selected
+  /////////////////////////////////
+
+  addSong() {
+    console.log('added song')
+  }
+
+  // Render sidebar
+  renderSidebar() {
+
+    console.log(this.state.selected)
+
+    // do api calls for the related content
+    console.log(this.state.selected[0].followers)
+    if (this.state.selected[0].hasOwnProperty('followers')) {
+      console.log('is an arts')
+      const sidebar = (
+        <div className="sidebar">
+          <div className="selected">
+            <SelectedArtist
+              selected={this.state.selected}
+              add={this.addSong.bind(this)}
+              />
+
+          </div>
+          <div className="related">
+            <h3>You may be interested in: </h3>
+            {/* <Related
+                  searchSelectedSong={this.searchSelectedSong}/> */}
+          </div>
+        </div>
+      )
+    } else {
+      console.log('isasnog')
+      const sidebar = (
+        <div className="sidebar">
+          <div className="selected">
+            <SelectedSong
+              selected={this.state.selected}
+              add={this.addSong.bind(this)}
+            />
+
+          </div>
+          <div className="related">
+            <h3>You may be interested in: </h3>
+            {/* <Related
+                  searchSelectedSong={this.searchSelectedSong}/> */}
+          </div>
+        </div>
+      )
+    }
+
+    ReactDOM.render(sidebar, document.getElementById("sidebar"))
+  }
+
+
   render() {
 
     if (!this.state.loggedIn) {
@@ -145,11 +215,6 @@ class App extends React.Component {
             <h3>Lets's get started!</h3>
             <Search searchInputChange={this.searchInputChange.bind(this)}/>
             <SearchList searchedArtists={this.state.searchArtists} searchedSongs={this.state.searchSongs} onSearchResultClick={this.onSearchResultClick.bind(this)}/>
-          </div>
-          <div className="related">
-            <h3>You may be interested in: </h3>
-            {/* <Related
-            searchSelectedSong={this.searchSelectedSong}/> */}
           </div>
           <div className="playlist-song-list">
             <h3>Current Lineup</h3>

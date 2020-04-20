@@ -9,6 +9,7 @@ const SearchList = ({ searchedArtists, searchedSongs, onSearchResultClick}) => (
       {searchedSongs.map((searchSong) =>
         <SearchSong
           onSearchResultClick= {onSearchResultClick}
+          info={searchSong}
           title={searchSong.name}
           songId={searchSong.id}
           uri={searchSong.uri}
@@ -21,11 +22,13 @@ const SearchList = ({ searchedArtists, searchedSongs, onSearchResultClick}) => (
       )}
     </ul>
 
+
     <div className="searched-artists">
       {
         searchedArtists.map((searchArtist) =>
         <SearchArtist
           onSearchResultClick={onSearchResultClick}
+          info={searchArtist}
           artist={searchArtist.name}
           genres={searchArtist.genres}
           artistId={searchArtist.id}

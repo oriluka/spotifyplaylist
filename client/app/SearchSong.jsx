@@ -2,7 +2,8 @@ import React from 'react';
 
 const SearchSong = (props) => (
   <li>
-    <div className="searchSong" onClick={props.onSearchResultClick} id={props.songId}>
+    <div className="searchSong" onClick={() => props.onSearchResultClick(props.info)} id={props.songId}>
+      <img src={props.albumArt[1].url}></img>
       <div className="div-trackname">{props.title}</div>
       <div className="div-artists">
         {props.artists.map((artist) =>
