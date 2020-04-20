@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SelectedArtist = ({selected, add}) => (
+const SelectedArtist = ({selected, add, toggleSelect }) => (
 
   //render artist
     <div className="selected-artist">

@@ -4,7 +4,9 @@ import axios from 'axios';
 import Spotify from 'spotify-web-api-js';
 import Search from './Search.jsx';
 import Lineup from './Lineup.jsx';
-import Related from './Related.jsx';
+
+import RelatedArtists from './RelatedArtists.jsx';
+import RelatedSongs from './RelatedSongs.jsx';
 import SearchList from './SearchList.jsx';
 import SelectedSong from './SelectedSong.jsx';
 import SelectedArtist from './SelectedArtist.jsx';
@@ -23,16 +25,12 @@ class App extends React.Component {
       loggedIn: params.access_token ? true: false,
       accessToken: null,
       refreshToken: null,
-      playlist: [],
+      lineup: [],
       playlistName: '',
-      playlistSize: '',
-      artist: '',
-      song: '',
       // Searched Stuff
       searchArtists: [],
       searchSongs: [],
       // Related
-      selectedSong: [],
       selected: [],
       relatedSongs: [],
       relatedArtists: []
@@ -121,12 +119,8 @@ class App extends React.Component {
     let options = {};
 
     spotifyApi.getArtistTopTracks(artistId, countryId, options, (err, resSongs) => {
-      console.log('******')
-      console.log(resSongs);
 
       spotifyApi.getArtistRelatedArtists(artistId, options, (err, resArtists) => {
-        console.log('*******')
-        console.log(resArtists)
 
         this.setState({
           relatedArtists: resArtists,
@@ -144,59 +138,115 @@ class App extends React.Component {
   ////////////////////////////////
   ////////////// Selected
   /////////////////////////////////
+  toggleSelect(id) {
+    let newState = this.state.lineup
+    let index = newState.indexOf(id);
+    if (index > -1) {
+      newState.splice(index, 1);
+      console.log('removed')
+    } else {
+      newState.push(id);
+      console.log('added')
+    }
 
-  addSong() {
-    console.log('added song')
+    this.setState({
+      lineup: newState
+    }, () => { console.log(this.state.lineup)});
+  }
+
+  addSongs() {
+    // Adds songs to playlist
+    console.log('added songs to playlist')
   }
 
   // Render sidebar
   renderSidebar() {
 
-    console.log(this.state.selected)
     let sidebar;
+    let artist;
+    let song;
     // do api calls for the related content
-    console.log(this.state.selected[0].followers)
     if (this.state.selected[0].hasOwnProperty('followers')) {
-      console.log('is an arts')
+
+      // Api call using artist
       sidebar = (
         <div className="sidebar">
           <div className="selected">
             <SelectedArtist
+              toggleSelect={this.toggleSelect.bind(this)}
               selected={this.state.selected}
-              add={this.addSong.bind(this)}
               />
-
-          </div>
-          <div className="related">
-            <h3>You may be interested in: </h3>
-            {/* <Related
-                  searchSelectedSong={this.searchSelectedSong}/> */}
           </div>
         </div>
       )
-      ReactDOM.render(sidebar, document.getElementById("sidebar"))
+      ReactDOM.render(sidebar, document.getElementById("sidebar-selected"))
+      artist = this.state.selected[0].id;
     } else {
-      console.log('isasnog')
-      sidebar = (
-        <div className="sidebar">
+
+      // Api call using song
+        sidebar = (
+          <div className="sidebar">
           <div className="selected">
             <SelectedSong
+              toggleSelect={this.toggleSelect.bind(this)}
               selected={this.state.selected}
-              add={this.addSong.bind(this)}
-            />
-
-          </div>
-          <div className="related">
-            <h3>You may be interested in: </h3>
-            {/* <Related
-                  searchSelectedSong={this.searchSelectedSong}/> */}
+              />
           </div>
         </div>
       )
-      ReactDOM.render(sidebar, document.getElementById("sidebar"))
+      ReactDOM.render(sidebar, document.getElementById("sidebar-selected"))
+      song = this.state.selected[0].id;
+      artist = this.state.selected[0].artists[0].id;
+
     }
+    // Run api calls to get related data
+    let renderRelated = this.renderRelated.bind(this)
+    let options = {"limit": 10}
+    let topTracks, relatedArtists;
+    spotifyApi.getArtistTopTracks(artist, 'US', options)
+      .then((songs) => {
+        topTracks = songs.tracks;
+        return spotifyApi.getArtistRelatedArtists(artist, options)
+      })
+      .then((artists) => {
+        relatedArtists = artists.artists;
+
+        console.log(topTracks)
+        console.log(relatedArtists)
+        this.setState({
+          relatedSongs: topTracks,
+          relatedArtists: relatedArtists
+        }, () => { renderRelated()})
+
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
 
+
+  }
+
+  renderRelated() {
+    console.log('/////')
+    console.log(this.state.relatedSongs)
+    console.log(this.state.relatedArtists)
+    let related = (
+      <div className="related">
+        <h3>You may be interested in: </h3>
+        <div className="related-songs"></div>
+          <RelatedSongs
+            songs={this.state.relatedSongs}
+            toggleSelect={this.toggleSelect.bind(this)}
+        />
+        <div className="related-artists">
+          <RelatedArtists
+           artists={this.state.relatedArtists}
+          />
+        </div>
+      </div>
+    )
+    ReactDOM.render(related, document.getElementById("sidebar-related"))
   }
 
 
@@ -220,7 +270,12 @@ class App extends React.Component {
           </div>
           <div className="playlist-song-list">
             <h3>Current Lineup</h3>
-            {/* <Lineup /> */}
+            <Lineup
+              name={this.state.playlistName}
+              lineup={this.state.lineup}
+              create={this.createPlaylist}
+              addSongs={this.addSongs}
+            />
           </div>
 
 
