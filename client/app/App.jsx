@@ -153,12 +153,12 @@ class App extends React.Component {
   renderSidebar() {
 
     console.log(this.state.selected)
-
+    let sidebar;
     // do api calls for the related content
     console.log(this.state.selected[0].followers)
     if (this.state.selected[0].hasOwnProperty('followers')) {
       console.log('is an arts')
-      const sidebar = (
+      sidebar = (
         <div className="sidebar">
           <div className="selected">
             <SelectedArtist
@@ -174,9 +174,10 @@ class App extends React.Component {
           </div>
         </div>
       )
+      ReactDOM.render(sidebar, document.getElementById("sidebar"))
     } else {
       console.log('isasnog')
-      const sidebar = (
+      sidebar = (
         <div className="sidebar">
           <div className="selected">
             <SelectedSong
@@ -192,9 +193,10 @@ class App extends React.Component {
           </div>
         </div>
       )
+      ReactDOM.render(sidebar, document.getElementById("sidebar"))
     }
 
-    ReactDOM.render(sidebar, document.getElementById("sidebar"))
+
   }
 
 
