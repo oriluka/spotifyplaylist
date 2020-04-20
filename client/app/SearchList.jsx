@@ -5,21 +5,30 @@ import SearchSong from './SearchSong.jsx';
 
 const SearchList = ({ searchedArtists, searchedSongs, onSearchResultClick}) => (
   <div>
-    <div className="searched-songs">
+    <ul className="searched-songs">
       {searchedSongs.map((searchSong) =>
         <SearchSong
-         onSearchResultClick={onSearchResultClick}
-         searchSong={SearchSong}
+          onSearchResultClick= {onSearchResultClick}
+          title={searchSong.name}
+          songId={searchSong.id}
+          uri={searchSong.uri}
+          previewUrl={searchSong.preview_url}
+          artists={searchSong.artists}
+          album={searchSong.album.name}
+          albumArt={searchSong.album.images[1].url}
         />
       )}
-    </div>
+    </ul>
 
     <div className="searched-artists">
       {searchedArtists.map((searchArtist) =>
         <SearchArtist
           onSearchResultClick={onSearchResultClick}
-          searchArtist={searchArtist}
-
+          artist={searchArtist.name}
+          genres={searchArtist.genres}
+          artistId={searchArtist.id}
+          image={searchArtist.images[1].url}
+          uri={searchArtist.uri}
         />
       )}
     </div>

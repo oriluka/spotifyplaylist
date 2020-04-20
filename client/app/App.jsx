@@ -25,8 +25,10 @@ class App extends React.Component {
       playlistSize: '',
       artist: '',
       song: '',
+      // Searched Stuff
       searchArtists: [],
       searchSongs: [],
+      // Related
       selectedSong: {},
       selected: [],
       relatedSongs: [],
@@ -52,7 +54,7 @@ class App extends React.Component {
   }
 
   // Toggles search entry. If toggled selected when create button is made, the songs get added
-  onSearchResultChange() {
+  onSearchResultClick() {
     // Add the
 
   }
@@ -83,12 +85,15 @@ class App extends React.Component {
     };
     spotifyApi.search(query, types, { limit: 3 }, (err, res) => {
       // If succeeded, display results as one enters in query.
-
+      if (err) {
+        console.log(err)
+      }
       console.log('/////// app.jsxSearchInputChange')
-      console.log(res)
+      console.log(res.tracks.items)
+      console.log(res.artists.items)
 
-      var songs = res.info
-      var artists = res.artists
+      var songs = res.tracks.items
+      var artists = res.artists.items
 
       // set search state
       this.setState({
@@ -138,8 +143,8 @@ class App extends React.Component {
         <div className="playlistbuilder-build">
           <div className="search-artist-and-song">
             <h3>Lets's get started!</h3>
-            <Search searchInputChange={this.searchInputChange}/>
-            <SearchList searchedArtists={this.state.searchArtists} searchedSongs={this.state.searchSongs} onSearchResultChange={this.onSearchResultChange.bind(this)}/>
+            <Search searchInputChange={this.searchInputChange.bind(this)}/>
+            <SearchList searchedArtists={this.state.searchArtists} searchedSongs={this.state.searchSongs} onSearchResultClick={this.onSearchResultClick.bind(this)}/>
           </div>
           <div className="related">
             <h3>You may be interested in: </h3>
