@@ -155,6 +155,9 @@ class App extends React.Component {
             <h3>Current Lineup</h3>
             {/* <Lineup /> */}
           </div>
+
+
+          <div id='rg_embed_link_378195' class='rg_embed_link' data-song-id='378195'>Read <a href='https://genius.com/Sia-chandelier-lyrics'>“Chandelier” by Sia</a> on Genius</div> <script crossorigin src='//genius.com/songs/378195/embed.js'></script>
         </div>
       )
     }
