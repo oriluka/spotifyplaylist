@@ -4,7 +4,8 @@
   "description": "An app that generates a playlist using spotify api based on user input",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode production -w",
+    "build1": "webpack --mode production",
     "start": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
