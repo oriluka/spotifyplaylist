@@ -25,7 +25,9 @@ class App extends React.Component {
       loggedIn: params.access_token ? true: false,
       accessToken: null,
       refreshToken: null,
+      userId: params.accountId,
       lineup: [],
+      getSongs: [],
       playlistName: '',
       // Searched Stuff
       searchArtists: [],
@@ -58,30 +60,21 @@ class App extends React.Component {
   onSearchResultClick(selection) {
     // Add the'
     let renderSidebar = this.renderSidebar.bind(this)
-    console.log('Clicked Search result')
     // set selected
-    console.log(this.state.selected)
     this.setState({
       selected: [selection]
-    }, () => {
-      console.log(this.state.selected)
-
-      renderSidebar()
-    });
+    }, () => {renderSidebar()});
   }
 
   // Gets info for selected song
   getSelectedSong(song) {
     spotifyApi.getTrack(trackId, options, (err, res) => {
-      console.log("**Track**");
-      console.log(res);
     });
   }
 
   getSelectedArtist(artist) {
     spotifyApi.getTrack(trackId, options, (err, res) => {
-      console.log("**Aartist**");
-      console.log(res);
+
     });
   }
 
@@ -99,9 +92,6 @@ class App extends React.Component {
       if (err) {
         console.log(err)
       }
-      console.log('/////// app.jsxSearchInputChange')
-      console.log(res.tracks.items)
-      console.log(res.artists.items)
 
       var songs = res.tracks.items
       var artists = res.artists.items
@@ -132,31 +122,66 @@ class App extends React.Component {
     })
   }
 
-  searchSelectedArtist(artist) {
-  }
-
   ////////////////////////////////
   ////////////// Selected
   /////////////////////////////////
-  toggleSelect(id) {
-    let newState = this.state.lineup
-    let index = newState.indexOf(id);
+
+  create(name) {
+    // make api request to create playlist
+    let songs = this.state.getSongs
+
+      let options = {
+        name: name,
+        public: true
+      };
+    spotifyApi.createPlaylist(this.state.userId, options)
+      .then((res) => {
+        console.log(res);
+        return spotifyApi.addTracksToPlaylist(res.id, songs, {"uris": songs
+        })
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+  }
+
+  toggleSelect(id, song) {
+    console.log('SONG')
+    console.log(this)
+    let lineup = this.state.lineup
+    let getSongs = this.state.getSongs // ids
+
+    let index = getSongs.indexOf(id);
+    let songIndex = lineup.indexOf(song.id)
+
+    // Iterate through song objects
+
     if (index > -1) {
-      newState.splice(index, 1);
+      getSongs.splice(index, 1);
+      for (var x = 0; x < lineup.length; x++) {
+        if (lineup[x].id === id) {
+          lineup.splice(x, 1);
+        }
+      }
       console.log('removed')
     } else {
-      newState.push(id);
+      console.log(id)
+      getSongs.push(id);
+      lineup.push(song)
       console.log('added')
     }
 
     this.setState({
-      lineup: newState
-    }, () => { console.log(this.state.lineup)});
-  }
+      lineup: lineup,
+      getSongs: getSongs
 
-  addSongs() {
-    // Adds songs to playlist
-    console.log('added songs to playlist')
+    }, () => {
+      console.log(this.state.lineup);
+      console.log(this.state.getSongs)});
   }
 
   // Render sidebar
@@ -223,8 +248,6 @@ class App extends React.Component {
         console.log(err);
       })
 
-
-
   }
 
   renderRelated() {
@@ -242,6 +265,7 @@ class App extends React.Component {
         <div className="related-artists">
           <RelatedArtists
            artists={this.state.relatedArtists}
+           onSearchResultClick={this.onSearchResultClick.bind(this)}
           />
         </div>
       </div>
@@ -271,10 +295,9 @@ class App extends React.Component {
           <div className="playlist-song-list">
             <h3>Current Lineup</h3>
             <Lineup
-              name={this.state.playlistName}
+              toggleSelect={this.toggleSelect.bind(this)}
               lineup={this.state.lineup}
-              create={this.createPlaylist}
-              addSongs={this.addSongs}
+              create={this.create.bind(this)}
             />
           </div>
 
