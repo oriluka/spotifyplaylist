@@ -277,8 +277,7 @@ class App extends React.Component {
       return (
         <div className="playlistbuilder-build">
           <div className="search-artist-and-song">
-            <h3>Lets's get started!</h3>
-            <p>Search for a song or artist</p>
+            <h3>Search for a song or artist</h3>
             <Search searchInputChange={this.searchInputChange.bind(this)}/>
             <SearchList searchedArtists={this.state.searchArtists} searchedSongs={this.state.searchSongs} onSearchResultClick={this.onSearchResultClick.bind(this)}/>
           </div>
