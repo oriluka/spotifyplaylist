@@ -85,9 +85,9 @@ class App extends React.Component {
   searchInputChange(query) {
     let types = ['artist', 'track'];
     let options = {
-      limit: 3
+      limit: 4
     };
-    spotifyApi.search(query, types, { limit: 3 }, (err, res) => {
+    spotifyApi.search(query, types, { limit: 4 }, (err, res) => {
       // If succeeded, display results as one enters in query.
       if (err) {
         console.log(err)
@@ -136,12 +136,10 @@ class App extends React.Component {
       };
     spotifyApi.createPlaylist(this.state.userId, options)
       .then((res) => {
-        console.log(res);
         return spotifyApi.addTracksToPlaylist(res.id, songs, {"uris": songs
         })
       })
       .then((res) => {
-        console.log(res)
       })
       .catch((err) => {
         console.log(err)
@@ -150,8 +148,6 @@ class App extends React.Component {
   }
 
   toggleSelect(id, song) {
-    console.log('SONG')
-    console.log(this)
     let lineup = this.state.lineup
     let getSongs = this.state.getSongs // ids
 
@@ -167,21 +163,16 @@ class App extends React.Component {
           lineup.splice(x, 1);
         }
       }
-      console.log('removed')
     } else {
-      console.log(id)
       getSongs.push(id);
       lineup.push(song)
-      console.log('added')
     }
 
     this.setState({
       lineup: lineup,
       getSongs: getSongs
 
-    }, () => {
-      console.log(this.state.lineup);
-      console.log(this.state.getSongs)});
+    })
   }
 
   // Render sidebar
@@ -251,9 +242,6 @@ class App extends React.Component {
   }
 
   renderRelated() {
-    console.log('/////')
-    console.log(this.state.relatedSongs)
-    console.log(this.state.relatedArtists)
     let related = (
       <div className="related">
         <h3>You may be interested in: </h3>

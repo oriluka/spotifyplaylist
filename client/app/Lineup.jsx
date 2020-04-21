@@ -9,12 +9,19 @@ class Lineup extends React.Component {
     }
   }
 
+  onChange(event) {
+ // Check to make sure a word was added
+   this.setState({
+     nameInput: event.target.value
+   })
+  }
+
   render() {
     return (
 
       <div>
-        <label>Name your playlist</label>
-        <input value="text"></input>
+        <label>Name your playlist: </label>
+        <input value={this.state.nameInput} onChange={this.onChange.bind(this)}></input>
         <ul>
           {this.props.lineup.map((entry) =>
             <LineupEntry
@@ -25,7 +32,7 @@ class Lineup extends React.Component {
             )}
         </ul>
 
-        <button onClick={() => this.props.create('TEST')}>Click to create new playlist</button>
+        <button onClick={() => this.props.create(this.state.nameInput)}>Click to create new playlist</button>
       </div>
     )
   }

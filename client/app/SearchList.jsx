@@ -18,12 +18,10 @@ const SearchList = ({ searchedArtists, searchedSongs, onSearchResultClick}) => (
           album={searchSong.album.name}
           albumArt={searchSong.album.images}
         />
-
       )}
     </ul>
 
-
-    <div className="searched-artists">
+    <ul className="searched-artists">
       {
         searchedArtists.map((searchArtist) =>
         <SearchArtist
@@ -35,12 +33,9 @@ const SearchList = ({ searchedArtists, searchedSongs, onSearchResultClick}) => (
           image={searchArtist.images}
           uri={searchArtist.uri}
         />
-
-
-      )
-
+        )
       }
-    </div>
+    </ul>
   </div>
 )
 
