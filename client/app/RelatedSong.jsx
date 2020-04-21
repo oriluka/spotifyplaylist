@@ -2,7 +2,7 @@ import React from 'react';
 
 
 const RelatedSong = ({ song, toggleSelect }) => (
-  <li onClick={() => toggleSelect(song.uri, song)}>
+  <div onClick={() => toggleSelect(song.uri, song)}>
     <img
       className="related-images"
       src={
@@ -13,7 +13,7 @@ const RelatedSong = ({ song, toggleSelect }) => (
     ></img>
     <div className="div-trackname">{song.name}</div>
     <div className="div-artists">{song.artists[0].name}</div>
-  </li>
+  </div>
 );
 
 export default RelatedSong;

@@ -5,8 +5,9 @@ import SearchSong from './SearchSong.jsx';
 
 const SearchList = ({ searchedArtists, searchedSongs, onSearchResultClick}) => (
   <div>
-    <ul className="searched-songs">
-      {searchedSongs.map((searchSong) =>
+    <ul className="searched">
+      {
+      searchedSongs.map((searchSong) =>
         <SearchSong
           onSearchResultClick= {onSearchResultClick}
           info={searchSong}
@@ -21,7 +22,7 @@ const SearchList = ({ searchedArtists, searchedSongs, onSearchResultClick}) => (
       )}
     </ul>
 
-    <ul className="searched-artists">
+    <ul className="searched">
       {
         searchedArtists.map((searchArtist) =>
         <SearchArtist
