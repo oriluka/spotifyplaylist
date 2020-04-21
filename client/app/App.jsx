@@ -243,13 +243,14 @@ class App extends React.Component {
 
   renderRelated() {
     let related = (
-      <div className="related">
+      <div className="related-stuff">
         <h3>You may be interested in: </h3>
-        <div className="related-songs"></div>
+        <div className="related-songs">
           <RelatedSongs
             songs={this.state.relatedSongs}
             toggleSelect={this.toggleSelect.bind(this)}
         />
+        </div>
         <div className="related-artists">
           <RelatedArtists
            artists={this.state.relatedArtists}
@@ -267,7 +268,7 @@ class App extends React.Component {
     if (!this.state.loggedIn) {
       return (
       <div className="playlistbuilder-login">
-          <a href='http://35.183.41.32:4444/login'>
+          <a href='http://localhost:4444/login'>
           <button>Login with Spotify</button>
         </a>
       </div>
@@ -276,7 +277,7 @@ class App extends React.Component {
       return (
         <div className="playlistbuilder-build">
           <div className="search-artist-and-song">
-            <h3>Lets's get started!</h3>
+            <h3>Search for a song or artist</h3>
             <Search searchInputChange={this.searchInputChange.bind(this)}/>
             <SearchList searchedArtists={this.state.searchArtists} searchedSongs={this.state.searchSongs} onSearchResultClick={this.onSearchResultClick.bind(this)}/>
           </div>

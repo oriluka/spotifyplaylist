@@ -5,9 +5,8 @@ html {
 
 div {
   text-align: center;
-  font-family: 'Quicksand', sans-serif;
   color: #fff;
-  padding: 1px;
+   font-family: 'Quicksand', sans-serif;
 }
 
 #selected-images{
@@ -25,6 +24,9 @@ img {
 }
 
 .searched {
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  color: #fff;
   list-style-type: none;
 -moz-column-count: 4;
 -moz-column-gap: 10px;
@@ -46,15 +48,30 @@ column-gap: 10px;
 padding: 10px;
 }
 
-.related  {
-  list-style-type: none;
--moz-column-count: 4;
--moz-column-gap: 10px;
--webkit-column-count: 4;
--webkit-column-gap: 10px;
-column-count: 4;
-column-gap: 10px;
-padding: 10px;
+.related-songss  {
+
+    list-style-type: none;
+    -moz-column-count: 3;
+    -moz-column-gap: 10px;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 10px;
+    column-count: 3;
+    column-gap: 10px;
+    margin: auto;
+
+}
+
+.related-artistss  {
+
+    list-style-type: none;
+    -moz-column-count: 3;
+    -moz-column-gap: 10px;
+    -webkit-column-count: 3;
+    -webkit-column-gap: 10px;
+    column-count: 3;
+    column-gap: 10px;
+    margin: auto;
+
 }
 /* #id {
     list-style-type: none;
@@ -95,6 +112,7 @@ div.div-artists {
 
 div.just-artists {
   font-weight: bold;
+  font-size: 14px;
   color: #fff;
 }
 
