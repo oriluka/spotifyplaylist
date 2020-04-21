@@ -4,7 +4,7 @@ import RelatedArtist from './RelatedArtist.jsx';
 
 const RelatedArtists = ({artists, onSearchResultClick}) => (
   <div>
-    <ul>
+    <ul className="related-artistss">
      {artists.map((artist) =>
        <RelatedArtist
          artist={artist}

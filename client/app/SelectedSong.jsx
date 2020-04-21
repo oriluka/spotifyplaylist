@@ -6,7 +6,7 @@ const Selected = ({ selected, add, toggleSelect }) => (
     onClick={() => toggleSelect(selected[0].uri, selected)}
     className="selected-song">
     <img
-      className="selected-images"
+      id="selected-images"
       src={
         selected[0].album.images[0]
           ? selected[0].album.images[0].url
@@ -15,7 +15,11 @@ const Selected = ({ selected, add, toggleSelect }) => (
     ></img>
     <div>{selected[0].name} </div>
     <div className="artist-name">{selected[0].artists[0].name} </div>
-    <span> </span>
+    <div className="media">
+      <audio controls>
+      <source src={selected[0].preview_url} type="audio/mpeg" />
+      </audio>
+    </div>
   </div>
 );
 

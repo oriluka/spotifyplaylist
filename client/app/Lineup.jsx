@@ -20,8 +20,6 @@ class Lineup extends React.Component {
     return (
 
       <div>
-        <label>Name your playlist: </label>
-        <input value={this.state.nameInput} onChange={this.onChange.bind(this)}></input>
         <ul id="lineup">
           {this.props.lineup.map((entry) =>
             <LineupEntry
@@ -31,7 +29,11 @@ class Lineup extends React.Component {
             />
             )}
         </ul>
+        <div>
 
+        <label>Name your playlist: </label>
+        <input value={this.state.nameInput} onChange={this.onChange.bind(this)}></input>
+        </div>
         <button onClick={() => this.props.create(this.state.nameInput)}>Click to create new playlist</button>
       </div>
     )
