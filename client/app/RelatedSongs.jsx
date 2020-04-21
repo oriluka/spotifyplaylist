@@ -4,7 +4,7 @@ import RelatedSong from './RelatedSong.jsx';
 
 const RelatedSongs = ({ songs, toggleSelect }) => (
   <div>
-    <ul>
+    <div className="related">
       {songs.map((song) =>
         <RelatedSong
           song={song}
@@ -12,7 +12,7 @@ const RelatedSongs = ({ songs, toggleSelect }) => (
         />
       )
       }
-    </ul>
+    </div>
   </div>
 )
 

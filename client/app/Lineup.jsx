@@ -22,7 +22,7 @@ class Lineup extends React.Component {
       <div>
         <label>Name your playlist: </label>
         <input value={this.state.nameInput} onChange={this.onChange.bind(this)}></input>
-        <ul>
+        <ul id="lineup">
           {this.props.lineup.map((entry) =>
             <LineupEntry
             toggleSelect={this.props.toggleSelect}
