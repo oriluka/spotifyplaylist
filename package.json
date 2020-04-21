@@ -4,7 +4,8 @@
   "description": "An app that generates a playlist using spotify api based on user input",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --mode production -w",
+    "build1": "webpack --mode production",
     "start": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,14 +21,19 @@
   "homepage": "https://github.com/oriluka/spotifyplaylist#readme",
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-runtime": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
+    "@babel/runtime": "^7.9.2",
     "babel-loader": "^8.1.0",
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.3",
     "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"
   },
