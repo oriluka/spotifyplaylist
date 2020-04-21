@@ -267,7 +267,7 @@ class App extends React.Component {
     if (!this.state.loggedIn) {
       return (
       <div className="playlistbuilder-login">
-        <a href='http://localhost:4444/login'>
+          <a href='http://35.183.41.32:4444/login'>
           <button>Login with Spotify</button>
         </a>
       </div>

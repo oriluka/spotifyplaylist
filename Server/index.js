@@ -105,7 +105,7 @@ app.get("/callback", function (req, res) {
 
           // we can also pass the token to the browser to make requests from there
           res.redirect(
-            "http://localhost:4444/#" +
+            "http://35.183.41.32:4444/#" +
             querystring.stringify({
               accountId: userId,
               access_token: access_token,
